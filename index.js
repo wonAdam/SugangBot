@@ -2,10 +2,11 @@ const { parse } = require('node-html-parser');
 const Apify = require('apify');
  
 // npm i 를 돌리고 쓰세요.
+// npm start
 
 console.clear();
 
-const clickDate = new Date('2020-08-09T02:13:00'); // 여기 클릭을 원하는 시간을 넣고 run 하세요.
+const clickDate = new Date('2020-08-09T11:04:00'); // 여기 클릭을 원하는 시간을 넣고 run 하세요.
 const loginInput = {
     "username": "<hakbun>", // 여기 학번를 넣고 run 하세요.
     "password": "<password>" // 여기 비밀번호를 넣고 run 하세요.
@@ -32,12 +33,12 @@ const page = (async () => {
      // 엔터를 열심히 쳤다면 빠르게 들어갈겁니다.
      // 그 다음 수강신청 버튼 잊지말구요.
     setInterval(async () => {
-        if(clickDate - Date.now() < 500){
+        if(clickDate - Date.now() < -500){
             console.log('click now ! ');
             await page.click('body > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(1) > table:nth-child(2) > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(19) > td > a');
             await page.waitForNavigation();
         }
-        console.log('tick: ' + Math.abs(clickDate - Date.now()));
+        console.log('milisec left: ' + (clickDate - Date.now()));
     }, 200)
     
 })();
