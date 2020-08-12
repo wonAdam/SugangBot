@@ -16,27 +16,27 @@ const page = (async () => {
     const browser = await Apify.launchPuppeteer();
     const page = await browser.newPage();
     
-    // /* *********************************************************************************** */ 
-    // /* *********************************************************************************** */ 
-    // //연습 사이트
-    // await page.goto('https://hongiksugang.github.io/sugang/main');
-    // await page.waitForSelector('.buttonA');
-    // /* *********************************************************************************** */ 
-    // /* *********************************************************************************** */ 
-
-
     /* *********************************************************************************** */ 
     /* *********************************************************************************** */ 
-    //실제 사이트
-    await page.goto('https://sugang.hongik.ac.kr/');
+    //연습 사이트
+    await page.goto('https://hongiksugang.github.io/sugang/main');
     await page.waitForSelector('.buttonA');
-     // Login
-     await page.type('body > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(1) > table:nth-child(2) > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(1) > td:nth-child(2) > input', loginInput.username);
-     await page.type('body > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(1) > table:nth-child(2) > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(3) > td:nth-child(2) > input', loginInput.password);
-     await page.click('body > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(1) > table:nth-child(2) > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(4) > td > input');
-     await page.waitForNavigation();
     /* *********************************************************************************** */ 
     /* *********************************************************************************** */ 
+
+
+    // /* *********************************************************************************** */ 
+    // /* *********************************************************************************** */ 
+    // //실제 사이트
+    // await page.goto('https://sugang.hongik.ac.kr/');
+    // await page.waitForSelector('.buttonA');
+    //  // Login
+    //  await page.type('body > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(1) > table:nth-child(2) > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(1) > td:nth-child(2) > input', loginInput.username);
+    //  await page.type('body > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(1) > table:nth-child(2) > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(3) > td:nth-child(2) > input', loginInput.password);
+    //  await page.click('body > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(1) > table:nth-child(2) > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(4) > td > input');
+    //  await page.waitForNavigation();
+    // /* *********************************************************************************** */ 
+    // /* *********************************************************************************** */ 
      
 
      // Clicker
