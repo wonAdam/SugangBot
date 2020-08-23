@@ -2,6 +2,7 @@ const { parse } = require('node-html-parser');
 const Apify = require('apify');
 const moment = require('moment');
 const dotenv = require('dotenv');
+const colors = require('colors');
 dotenv.config('./.env');
 
 const loginInput = {
@@ -18,7 +19,7 @@ const loginInput = {
 
 console.clear();
 
-const clickDate = moment(new Date('2020-08-20T18:01:00'), 'Asia/Seoul'); // 여기 클릭을 원하는 시간을 넣고 run 하세요.
+const clickDate = moment(new Date('2020-08-23T13:00:00'), 'Asia/Seoul'); // 여기 클릭을 원하는 시간을 넣고 run 하세요.
 const c_d = moment(new Date(), 'Asia/Seoul');
 
 if(clickDate - c_d > 0){
@@ -32,6 +33,10 @@ if(clickDate - c_d > 0){
         .then(async (browser) => {
             const sugangPage = await browser.newPage();
             _sugangPage = sugangPage;
+
+
+
+            
             // // // 연습 사이트
             // await sugangPage.goto('https://hongiksugang.github.io/sugang/main');
             // await sugangPage.waitForSelector('.buttonA');
@@ -198,6 +203,6 @@ if(clickDate - c_d > 0){
 
 }
 else{
-    console.log(`Set rightful click time`)
+    console.log(`Set rightful click time`.bgRed)
 }
 

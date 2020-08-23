@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "apify": "^0.21.3",
+    "colors": "^1.4.0",
     "dotenv": "^8.2.0",
     "moment": "^2.27.0",
     "node-html-parser": "^1.2.20"
