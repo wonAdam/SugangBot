@@ -19,7 +19,7 @@ const loginInput = {
 
 console.clear();
 
-const clickDate = moment(new Date('2020-08-23T13:00:00'), 'Asia/Seoul'); // 여기 클릭을 원하는 시간을 넣고 run 하세요.
+const clickDate = moment(new Date('2020-08-24T14:00:00'), 'Asia/Seoul'); // 여기 클릭을 원하는 시간을 넣고 run 하세요.
 const c_d = moment(new Date(), 'Asia/Seoul');
 
 if(clickDate - c_d > 0){
@@ -134,18 +134,20 @@ if(clickDate - c_d > 0){
                 
                 count++;
                 // 남은 시간 logging
-                if(logCountLimit <= count && 
-                    Math.floor(Math.floor((clickDate - currDate) / 1000) / 3600) % 24 > 0){
-                    console.log(`hours left: ${Math.floor(Math.floor((clickDate - currDate) / 1000) / 3600) % 24}`);
-                }
-                if(logCountLimit <= count && 
-                    Math.floor(Math.floor((clickDate - currDate) / 1000) / 60) % 60 > 0){
-                    console.log(`minutes left: ${Math.floor(Math.floor((clickDate - currDate) / 1000) / 60) % 60}`);
-                }
                 if(logCountLimit <= count){
-                    console.log(`seconds left: ${Math.floor((clickDate - currDate) / 1000) % 60}`);
+                    console.clear();
+                    if(Math.floor(Math.floor((clickDate - currDate) / 1000) / 3600) % 24 > 0){
+                        console.log(`hours left: ${Math.floor(Math.floor((clickDate - currDate) / 1000) / 3600) % 24}`.bgRed);
+                    }
+                    if(Math.floor(Math.floor((clickDate - currDate) / 1000) / 60) % 60 > 0){
+                        console.log(`minutes left: ${Math.floor(Math.floor((clickDate - currDate) / 1000) / 60) % 60}`.bgRed);
+                    }
+    
+                    console.log(`seconds left: ${Math.floor((clickDate - currDate) / 1000) % 60}`.bgRed);
                     count = 0;
                 }
+                
+                
                 
     
                 // 시간이 되면 빠져나오게.
@@ -168,26 +170,28 @@ if(clickDate - c_d > 0){
                         clicked1 = true;
                         await _sugangPage.click('body > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(1) > table:nth-child(2) > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(19) > td > a');
                         await navigationPromise;
-                        try{
-                            if(!clicked2){
-                                _sugangPage.removeAllListeners('dialog');
-                                clicked2 = true;
-                                const navigationPromise = _sugangPage.waitForNavigation();
-                                await _sugangPage.click('#sugangButton');
-                                await navigationPromise;
-                                
-                            }
-                        }catch(err){
-                            _sugangPage.on('dialog', async (dialog) => {
-                                await dialog.dismiss();
-                            })                
-                            console.log(`There is no such btn | ERROR : ${err.message} or There is `);
-                            clicked2 = false;
-                            clicked1 = false;
-                        }
+                        
                     }
                 }catch(err){
                     console.log(`A ERROR: ${err.message}`);
+                    clicked1 = false;
+                }
+
+                try{
+                    if(!clicked2){
+                        _sugangPage.removeAllListeners('dialog');
+                        clicked2 = true;
+                        const navigationPromise = _sugangPage.waitForNavigation();
+                        await _sugangPage.click('#sugangButton');
+                        await navigationPromise;
+                        
+                    }
+                }catch(err){
+                    _sugangPage.on('dialog', async (dialog) => {
+                        await dialog.dismiss();
+                    })                
+                    console.log(`There is no such btn | ERROR : ${err.message} or There is `);
+                    clicked2 = false;
                     clicked1 = false;
                 }
             }
