@@ -178,7 +178,7 @@ if(clickDate - c_d > 0){
                 }
 
                 try{
-                    if(!clicked2){
+                    if(clicked1 && !clicked2){
                         _sugangPage.removeAllListeners('dialog');
                         clicked2 = true;
                         const navigationPromise = _sugangPage.waitForNavigation();
