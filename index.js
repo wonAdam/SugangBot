@@ -5,9 +5,13 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 dotenv.config('./.env');
 
+// 같은 디렉토리 레벨에 ".env"파일을 만들고 파일에
+// hakbun = B600000
+// password = youpassword
+// 를 기입하세요.
 const loginInput = {
-    username: process.env.hakbun, // 여기 학번를 넣고 run 하세요.
-    password: process.env.password // 여기 비밀번호를 넣고 run 하세요.
+    username: process.env.hakbun, 
+    password: process.env.password 
 }
  
 // npm i 를 돌리고 쓰세요.
@@ -19,7 +23,10 @@ const loginInput = {
 
 console.clear();
 
-const clickDate = moment(new Date('2021-02-08T10:24:00'), 'Asia/Seoul'); // 여기 클릭을 원하는 시간을 넣고 run 하세요.
+//***********************************************************************//
+//**************여기 클릭을 원하는 시간을 넣고 run 하세요.******************//
+//***********************************************************************//
+const clickDate = moment(new Date('2021-02-08T10:24:00'), 'Asia/Seoul'); // <---- 날짜시간형식은 망가뜨리지마세요.
 const c_d = moment(new Date(), 'Asia/Seoul');
 
 if(clickDate - c_d > 0){
