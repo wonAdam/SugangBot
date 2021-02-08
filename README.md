@@ -6,7 +6,7 @@
 
 ### 홍익대학교 수강신청 연습사이트로 스파링
 
-###### [홍익수강](https://hongiksugang.github.io/sugang/main, "홍익수강")
+###### [홍익소리](https://hongiksori.com/sugang/home, "홍익소리")
 
 
 
