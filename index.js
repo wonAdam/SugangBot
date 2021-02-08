@@ -19,7 +19,7 @@ const loginInput = {
 
 console.clear();
 
-const clickDate = moment(new Date('2020-08-24T14:00:00'), 'Asia/Seoul'); // 여기 클릭을 원하는 시간을 넣고 run 하세요.
+const clickDate = moment(new Date('2021-02-08T10:24:00'), 'Asia/Seoul'); // 여기 클릭을 원하는 시간을 넣고 run 하세요.
 const c_d = moment(new Date(), 'Asia/Seoul');
 
 if(clickDate - c_d > 0){
@@ -36,22 +36,36 @@ if(clickDate - c_d > 0){
 
 
 
-            
-            // // // 연습 사이트
-            // await sugangPage.goto('https://hongiksugang.github.io/sugang/main');
-            // await sugangPage.waitForSelector('.buttonA');
-    
-    
-            // // 실제 사이트
-            await sugangPage.goto('https://sugang.hongik.ac.kr/');
-            await sugangPage.waitForSelector('.buttonA');
-                    // Login
-            await sugangPage.type('body > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(1) > table:nth-child(2) > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(1) > td:nth-child(2) > input', 
+            //-------------------------- 연습 사이트 --------------------------//
+            await sugangPage.goto('https://hongiksori.com/');
+            await sugangPage.waitForSelector('#id_username');
+            // Login
+            await sugangPage.type('#id_username', 
                 loginInput.username);
-            await sugangPage.type('body > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(1) > table:nth-child(2) > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(3) > td:nth-child(2) > input', 
+            await sugangPage.type('#id_password', 
                 loginInput.password);
-            await sugangPage.click('body > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(1) > table:nth-child(2) > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(4) > td > input');
-            
+            let w = sugangPage.waitForNavigation();
+            await sugangPage.click('#sign-form > form > input.submit-button');
+            await w;
+            await sugangPage.waitForSelector('#left-header > nav > a.header-link.sugang');
+            w = sugangPage.waitForNavigation();
+            await sugangPage.click('#left-header > nav > a.header-link.sugang');
+            await w;
+            await sugangPage.waitForSelector('body > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(1) > table:nth-child(2) > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(19) > td > a');
+            //-------------------------------------------------------------------//
+    
+
+
+            // //-------------------------- 실제 사이트 --------------------------//
+            // await sugangPage.goto('https://sugang.hongik.ac.kr/');
+            // await sugangPage.waitForSelector('.buttonA');
+            // // Login
+            // await sugangPage.type('body > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(1) > table:nth-child(2) > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(1) > td:nth-child(2) > input', 
+            //     loginInput.username);
+            // await sugangPage.type('body > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(1) > table:nth-child(2) > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(3) > td:nth-child(2) > input', 
+            //     loginInput.password);
+            // await sugangPage.click('body > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(1) > table:nth-child(2) > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(4) > td > input');
+            // //-------------------------------------------------------------------//
     
     
             // Page Alert Box 처리하기
@@ -66,9 +80,7 @@ if(clickDate - c_d > 0){
         .catch((err) => console.log(err));
         
     
-        // /* *********************************************************************************** */ 
-        // 네이버 서버시간 사이트 열기
-    
+        /* ***************************************** 네이버 서버시간 사이트 열기 ****************************************** */ 
         Apify.launchPuppeteer()
         .then(async (browser) => {
             
@@ -133,7 +145,7 @@ if(clickDate - c_d > 0){
     
                 
                 count++;
-                // 남은 시간 logging
+                /* ***************************************** 남은 시간 logging ****************************************** */ 
                 if(logCountLimit <= count){
                     console.clear();
                     if(Math.floor(Math.floor((clickDate - currDate) / 1000) / 3600) % 24 > 0){
@@ -158,19 +170,17 @@ if(clickDate - c_d > 0){
     
             }
     
-            // /* *********************************************************************************** */ 
-            // Clicker
+            /* ***************************************** Clicker ****************************************** */ 
             let clicked1 = false;
             let clicked2 = false;
+            let w;
             while(true){
                 try{
                     if(!clicked1){
                         console.log('click now ! ');
-                        const navigationPromise = _sugangPage.waitForNavigation();
-                        clicked1 = true;
+                        w = _sugangPage.waitForNavigation();
                         await _sugangPage.click('body > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(1) > table:nth-child(2) > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(19) > td > a');
-                        await navigationPromise;
-                        
+                        clicked1 = true;
                     }
                 }catch(err){
                     console.log(`A ERROR: ${err.message}`);
@@ -179,17 +189,19 @@ if(clickDate - c_d > 0){
 
                 try{
                     if(clicked1 && !clicked2){
+                        await w;
+                        await _sugangPage.waitForSelector('#sugangButton');
                         _sugangPage.removeAllListeners('dialog');
-                        clicked2 = true;
-                        const navigationPromise = _sugangPage.waitForNavigation();
                         await _sugangPage.click('#sugangButton');
-                        await navigationPromise;
-                        
+                        clicked2 = true;
+
+                        // 아무것도 안하기 위한 dummy wait
+                        // 필요한 작업을 열린 브라우저에서 끝내고 "브라우저를 닫지 말고" "프로세스를 종료하세요."
+                        await _sugangPage.waitForSelector('#asdadad1231sadas');
+                        await _sugangPage.waitForSelector('#asdadadfasf1231sadas');
+                        await _sugangPage.waitForSelector('#asdadad12sdddddd31sadas');
                     }
                 }catch(err){
-                    _sugangPage.on('dialog', async (dialog) => {
-                        await dialog.dismiss();
-                    })                
                     console.log(`There is no such btn | ERROR : ${err.message} or There is `);
                     clicked2 = false;
                     clicked1 = false;
